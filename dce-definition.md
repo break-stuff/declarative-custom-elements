@@ -159,3 +159,11 @@ Usage:
 One of the biggest complaints I hear from teams is that there is a negative user experience from flash of unstyled content (FOUC) that is caused by time between the initial markup rendering and when the JavaScript is loaded and the components are defined. Teams rely on their frameworks to server-side-render (SSR) their page content to remove this behavior.
 
 The ability to create the default markup and styles of a component would reduce this issue by allowing content to be initially style and slotted in the right place from the start. Then, once JavaScript has been loaded, components could be upgraded.
+
+For reusable components like in design systems, this would also help reduce the need for framework-specific SSR build tools. Initial component renders could be handled using DCEs and components can be upgraded vis a lazy-loader as needed.
+
+## Existing Examples
+
+- [WICG Proposal](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Declarative-Custom-Elements-Strawman.md)
+- [EPA-WG/custom-element](https://github.com/EPA-WG/custom-element?tab=readme-ov-file#template-syntax)
+- [Heximal](https://github.com/elematic/heximal/tree/main?tab=readme-ov-file#components)

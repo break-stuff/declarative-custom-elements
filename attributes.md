@@ -88,3 +88,8 @@ With the declarative approach, a proposal that was discussed was the opportunity
 <!-- `type` would fall back to "date" because a defined value was not used -->
 <my-date-picker type="range"></my-date-picker>
 ```
+
+## Existing Examples
+
+- [EPA-WG/custom-element](https://github.com/EPA-WG/custom-element?tab=readme-ov-file#attributes)
+- [WICG Proposal](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Declarative-Custom-Elements-Strawman.md)

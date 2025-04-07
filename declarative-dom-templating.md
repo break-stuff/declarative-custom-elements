@@ -76,3 +76,4 @@ Fortunately, there is some prior art and proposals available to create ideas.
 
 - [The existing XLST features](https://developer.mozilla.org/en-US/docs/Web/XML/XSLT)
 - [Heximal](https://github.com/elematic/heximal/tree/main)
+- [EPA-WG/custom-element](https://github.com/EPA-WG/custom-element?tab=readme-ov-file#template-syntax)
