@@ -20,7 +20,8 @@ Creating a new `definition` element:
 </definition>
 ```
 
-Extending the existing `template` element. This example adds a `define` attribute:
+Extending the existing `template` element. This example adds a `define` attribute.
+
 
 ```html
 <template define="my-element" shadowmode="closed">
@@ -36,6 +37,8 @@ some active examples use web components to define new elements. This example use
 </custom-element>
 ```
 
+I originally preferred extending the `<template>` element, but I think Justin Fagnani highlights some really important points about the syntax in [this thread](https://discord.com/channels/767813449048260658/1359217724147892446) that demonstrates the importance of using a `<definition>` tag.
+
 ## Capabilities
 
 This initial version would be able to declaratively define and upgradable custom element that would render static markup and styles that can have an attached shadow root.
@@ -43,45 +46,48 @@ This initial version would be able to declaratively define and upgradable custom
 This may not seem very useful at first, but it provides some huge capabilities that teams have been looking for:
 
 - Removes JS requirement for non-JS components
-- SSR
+- Provide an initial render of components to reduce FOUC
+- Simplify the SSR implementation story
 
 ### Non-JS Components
 
-The ability to remove the JavaScript requirement for CSS-only components, would be a huge win for many teams trying to create reusable components.
+The ability to remove the JavaScript requirement for CSS-only components, would be a huge win for many teams trying to create performant reusable components.
 
 #### Library Component Example
 
 Definition:
 
 ```html
-<template define="my-badge" shadowmode="closed">
-  <style>
-    :host {
-      --badge-fg-color: white;
-      --badge-bg-color: blue;
-      --badge-border-color: blue;
-    }
-    
-    :host([hollow]) .base {
-      --badge-fg-color: blue;
-      --badge-bg-color: transparent;
-    }
-
-    :host([variant="danger"]) .base  {
-      --badge-bg-color: red;
-      --badge-border-color: red;
-    }
-
-    :host([variant="warning"]) .base  {
-      --badge-fg-color: black;
-      --badge-bg-color: yellow;
-      --badge-border-color: yellow;
-    }
-  </style>
-  <span class="base" part="base">
-    <slot></slot>
-  </span>
-</template>
+<definition name="my-badge">
+  <template shadowmode="closed">
+    <style>
+      :host {
+        --badge-fg-color: white;
+        --badge-bg-color: blue;
+        --badge-border-color: blue;
+      }
+      
+      :host([hollow]) .base {
+        --badge-fg-color: blue;
+        --badge-bg-color: transparent;
+      }
+  
+      :host([variant="danger"]) .base  {
+        --badge-bg-color: red;
+        --badge-border-color: red;
+      }
+  
+      :host([variant="warning"]) .base  {
+        --badge-fg-color: black;
+        --badge-bg-color: yellow;
+        --badge-border-color: yellow;
+      }
+    </style>
+    <span class="base" part="base">
+      <slot></slot>
+    </span>
+  </template> 
+</definition>
 ```
 
 Usage:
@@ -154,13 +160,59 @@ Usage:
 </flex-box>
 ```
 
+## Reduced FOUC
+
+One of the biggest complaints I hear from teams is that there is a negative user experience from flash of unstyled content (FOUC) that is caused by the time between the initial markup rendering and when the JavaScript is loaded, the components are defined, and finally rendered.
+
+A example we have is that we have CMSs that lazy-load our components. There is lag between when the page's content loads and when our components are loaded and rendered.
+
+We would like to be able to pre-render all of the default contents of our components as DCEs and load them at the root of the project. When the components are used on a page, the content is immediately rendered accurately and the interactivity is added when the lazy-loader upgrades the DCE to be an autonomous custom element (if needed).
+
 ## SSR
 
-One of the biggest complaints I hear from teams is that there is a negative user experience from flash of unstyled content (FOUC) that is caused by time between the initial markup rendering and when the JavaScript is loaded and the components are defined. Teams rely on their frameworks to server-side-render (SSR) their page content to remove this behavior.
+In order to support SSR with web components, teams are dependent on their libraries or framework to provide an integration for it for each framework.
 
-The ability to create the default markup and styles of a component would reduce this issue by allowing content to be initially style and slotted in the right place from the start. Then, once JavaScript has been loaded, components could be upgraded.
+They often also require specific component configurations and restrictions on how components can be authored.
 
-For reusable components like in design systems, this would also help reduce the need for framework-specific SSR build tools. Initial component renders could be handled using DCEs and components can be upgraded vis a lazy-loader as needed.
+DCEs could greatly simplify and standardize the SSR implementation for a more framework agnostic approach to pre-rendering components and rendering.
+
+Even if we needed to add all of the DCEs to a component wrapper so they could be SSRed into the root of the project, this would be significantly simpler that the existing solutions.
+
+```jsx
+// JSX environments like react and Solid.js
+export default function MyDCEComponents() {
+  return (
+    <>
+      <definition name="my-avatar">
+        ...
+      </definition>
+      <definition name="my-badge">
+        ...
+      </definition>
+      <definition name="my-button">
+        ...
+      </definition>
+      ...
+    </>
+  )
+}
+```
+
+```html
+// Vue.js
+<template>
+  <definition name="my-avatar">
+    ...
+  </definition>
+  <definition name="my-badge">
+    ...
+  </definition>
+  <definition name="my-button">
+    ...
+  </definition>
+  ...
+</template>
+```
 
 ## Existing Examples
 

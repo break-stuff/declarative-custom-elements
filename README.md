@@ -2,17 +2,12 @@
 
 This is not intended to be a proposal for the Declarative Custom Elements (DCE) spec design, but a high-level capture of possible features and a proposal for a potential roll-out plan.
 
+The goal is to break down the spec into smaller iterations in order to avoid specific dependencies holding back the entire spec.
+
 ## Key Focus Areas
 
-Key areas of the DCE spec that should be focused on and proposed implementation order are:
+Based on conversations with other teams and the needs of our own design systems and component libraries, rolling out these phases could provide immediate value with incremental value as each spec is formalize and committed.
 
-- [DCE definition and static templating](/dce-definition.md)
-- [Attribute definition and template value binding](/attributes.md)
-- [Declarative templating](declarative-dom-templating.md)
-
-## Additional Considerations
-
-Areas that are related, but can be developed in parallel and should not be blockers of the proposal are:
-
-- [HTML and CSS Modules](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/HTML-Imports-and-ES-Modules.md)
-- Editor support for DCEs
+- Phase 1: [DCE definition and static templating](/dce-definition.md)
+- Phase 2: [Attribute definition and template value binding](/attributes.md)
+- Phase 3: [Declarative templating](declarative-dom-templating.md)
