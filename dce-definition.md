@@ -1,5 +1,7 @@
 # Declarative Custom Element Definition
 
+> **NOTE:** All examples here are not intended to be proposals for the final spec, but just an attempt to capture high-level features.
+
 This proposal is that we start with component the ability to declaratively define a custom element with a statically rendered template.
 
 ## Dependencies

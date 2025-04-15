@@ -1,5 +1,7 @@
 # Declarative DOM Templating
 
+> **NOTE:** All examples here are not intended to be proposals for the final spec, but just an attempt to capture high-level features.
+
 Declarative DOM templating is a way to declaratively render content based on data values. This includes conditionally rendering content and iterating over data to render templates.
 
 ## Dependencies

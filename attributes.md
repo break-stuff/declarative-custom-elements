@@ -1,5 +1,7 @@
 # Attributes and Template Binding
 
+> **NOTE:** All examples here are not intended to be proposals for the final spec, but just an attempt to capture high-level features.
+
 The next proposal is the ability to pass data into the template via attributes.
 
 ## Dependencies
